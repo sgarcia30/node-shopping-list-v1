@@ -31,6 +31,25 @@ app.get('/shopping-list', (req, res) => {
   res.json(ShoppingList.get());
 });
 
+// we import the Recipes model, which we'll
+// interact with in our GET endpoint
+const {Recipes} = require('./models');
+
+// we're going to add some items to RecipesList
+// so there's some data to look at. Note that 
+// normally you wouldn't do this. Usually your
+// server will simply expose the state of the
+// underlying database.
+Recipes.create('Chocolate Milk', ['cocoa', 'milk', 'sugar']);
+Recipes.create('Peanut Butter & Jelly', ['bread', 'peanut butter', 'jelly']);
+Recipes.create('Mango Ice Cream', ['mango', 'coconut milk', 'vanilla extract']);
+
+// when the root of this route is called with GET, return
+// all current ShoppingList items by calling `Recipes.get()`
+app.get('/recipe-list', (req, res) => {
+  res.json(Recipes.get());
+});
+
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
 });
